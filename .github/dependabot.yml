@@ -23,7 +23,7 @@ updates:
 
     # Use Gitmoji in the commit message
     commit-message:
-      prefix: "⬆️"
+      prefix: "⬆️ "
       include: "scope"
 
     # Set the pull request label
@@ -54,7 +54,7 @@ updates:
 
     # Use Gitmoji in the commit message
     commit-message:
-      prefix: "🔨️"
+      prefix: "🔨️ "
       include: "scope"
 
     # Set the pull request label
@@ -82,7 +82,7 @@ updates:
 
     # Use Gitmoji in the commit message
     commit-message:
-      prefix: "⬆️"
+      prefix: "⬆️ "
       include: "scope"
 
     # Set the pull request label
