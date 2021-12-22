@@ -1,0 +1,40 @@
+name: "Test"
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  run-tests:
+    name: "Run tests"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "Setup Python"
+        uses: actions/setup-python@v2
+
+      - name: "Setup Poetry"
+        uses: abatilo/actions-poetry@v2.1.4
+
+      - name: "Setup Poetry Python environment"
+        uses: Steffo99/actions-poetry-deps@0.2.1
+
+      - name: "Run tests"
+        run: |
+          source $pythonLocation/activate
+          pytest --verbose --cov=. --cov-report=html
+
+      - name: "Upload coverage"
+        uses: actions/upload-artifact@v2
+        with:
+          name: "code-coverage-report"
+          path: htmlcov

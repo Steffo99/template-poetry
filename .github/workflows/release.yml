@@ -1,10 +1,11 @@
-name: "On push to main"
+name: "Release"
 
 on:
-  workflow_dispatch:
+  release:
+    types:
+      - published
 
 jobs:
-
   analyze-codeql:
     name: "Perform CodeQL analysis"
     runs-on: ubuntu-latest
@@ -26,7 +27,7 @@ jobs:
       - name: "Perform CodeQL analysis"
         uses: github/codeql-action/analyze@v1
 
-  run-tests:
+  analyze-pytest:
     name: "Run tests"
     runs-on: ubuntu-latest
 
@@ -57,8 +58,6 @@ jobs:
   build-package:
     name: "Build Python package"
     runs-on: ubuntu-latest
-    needs:
-      - run-tests
 
     steps:
       - name: "Checkout repository"
@@ -79,11 +78,13 @@ jobs:
       - name: "Upload package artifact"
         uses: actions/upload-artifact@v2
         with:
+          name: "package.tar.gz"
           path: dist/*.tar.gz
 
       - name: "Upload wheel artifact"
         uses: actions/upload-artifact@v2
         with:
+          name: "package.whl"
           path: dist/*-py3-none-any.whl
 
   build-docs:
@@ -105,25 +106,40 @@ jobs:
         uses: Steffo99/actions-poetry-deps@0.2.1
 
       - name: "Build HTML documentation with Sphinx"
-        working-directory: thesis/
+        working-directory: docs/
         run: |
           source ${{ steps.pyenv.outputs.pyenv }}/activate
           make html
 
-      - name: "Upload artifact"
+      - name: "Upload docs artifact"
         uses: actions/upload-artifact@v2.3.1
         with:
           name: "documentation"
           path: "docs/build/html/"
 
+  # publish-package:
+  #   name: "Publish Python package"
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - analyze-pytest
+  #     - analyze-codeql
+  #     - build-package
+  #     - build-docs
+  #
+  #   steps:
+  #     ???
+
   publish-docs:
     name: "Publish documentation on GitHub Pages"
     runs-on: ubuntu-latest
     needs:
-      - "build-docs"
+      - analyze-pytest
+      - analyze-codeql
+      - build-package
+      - build-docs
 
     steps:
-      - name: "Download artifact"
+      - name: "Download docs artifact"
         uses: actions/download-artifact@v2.1.0
         with:
           name: "documentation"
