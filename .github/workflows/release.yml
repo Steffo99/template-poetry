@@ -42,11 +42,12 @@ jobs:
         uses: abatilo/actions-poetry@v2.1.4
 
       - name: "Setup Poetry Python environment"
-        uses: Steffo99/actions-poetry-deps@0.2.1
+        id: pyenv
+        uses: Steffo99/actions-poetry-deps@0.2.3
 
       - name: "Run tests"
         run: |
-          source $pythonLocation/activate
+          source ${{ steps.pyenv.outputs.pyenv }}/activate
           pytest --verbose --cov=. --cov-report=html
 
       - name: "Upload coverage"
@@ -70,7 +71,7 @@ jobs:
         uses: abatilo/actions-poetry@v2.1.4
 
       - name: "Setup Poetry Python environment"
-        uses: Steffo99/actions-poetry-deps@0.2.1
+        uses: Steffo99/actions-poetry-deps@0.2.3
 
       - name: "Build Poetry package"
         run: poetry build --no-interaction
@@ -103,7 +104,7 @@ jobs:
 
       - name: "Setup Poetry Python environment"
         id: "pyenv"
-        uses: Steffo99/actions-poetry-deps@0.2.1
+        uses: Steffo99/actions-poetry-deps@0.2.3
 
       - name: "Build HTML documentation with Sphinx"
         working-directory: docs/
