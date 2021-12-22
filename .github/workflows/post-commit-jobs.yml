@@ -1,0 +1,82 @@
+name: Post-commit jobs
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  analyze-codeql:
+    name: "Perform CodeQL analysis"
+    runs-on: ubuntu-latest
+
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "Initialize CodeQL"
+        uses: github/codeql-action/init@v1
+        with:
+          languages: python
+
+      - name: "Perform CodeQL analysis"
+        uses: github/codeql-action/analyze@v1
+
+  build-docs:
+    name: "Build documentation"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "Setup Python"
+        uses: actions/setup-python@v2
+
+      - name: "Setup Poetry"
+        uses: abatilo/actions-poetry@v2.1.4
+
+      - name: "Setup Poetry Python environment"
+        id: "pyenv"
+        uses: Steffo99/actions-poetry-deps@0.2.1
+
+      - name: "Build HTML documentation with Sphinx"
+        working-directory: thesis/
+        run: |
+          source ${{ steps.pyenv.outputs.pyenv }}/activate
+          make html
+
+      - name: "Upload artifact"
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: "documentation"
+          path: "docs/build/html/"
+
+  publish-docs:
+    name: "Publish documentation on GitHub Pages"
+    runs-on: ubuntu-latest
+    needs:
+      - "build-docs"
+
+    steps:
+      - name: "Download artifact"
+        uses: actions/download-artifact@v2.1.0
+        with:
+          name: "documentation"
+          path: "docs/build/html/"
+
+      - name: "Publish build to GitHub Pages"
+        uses: peaceiris/actions-gh-pages@v3.7.3
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          publish_dir: "docs/build/html/"
+          enable_jekyll: false
