@@ -167,3 +167,7 @@ pytest-github-actions-annotate-failures = "^0.1.6"
 
 
 
+[tool.pytest.ini_options]
+#########################
+# Pytest configuration  #
+#########################
