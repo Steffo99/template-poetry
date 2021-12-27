@@ -1,0 +1,166 @@
+name: "🔨 Steffo's Python Poetry Workflow"
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  schedule:
+    - cron: "10 10 * * 1"  # Every monday at 10:10 AM
+  release:
+    types:
+      - published
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  analyze-codeql:
+    name: "🔍 Perform CodeQL analysis"
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      - name: "⬇️ Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "🔨 Initialize CodeQL"
+        uses: github/codeql-action/init@v1
+        with:
+          languages: python
+
+      - name: "🔍 Perform CodeQL analysis"
+        uses: github/codeql-action/analyze@v1
+
+  analyze-pytest:
+    name: "🧪 Test package"
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: username
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - "5432:5432"
+
+    steps:
+      - name: "⬇️ Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "🔨 Setup Python"
+        uses: actions/setup-python@v2
+
+      - name: "🔨 Setup Poetry"
+        uses: abatilo/actions-poetry@v2.1.4
+
+      - name: "🔨 Setup Poetry Python environment"
+        id: pyenv
+        uses: Steffo99/actions-poetry-deps@0.2.3
+
+      - name: "🧪 Run tests"
+        run: |
+          source ${{ steps.pyenv.outputs.pyenv }}/activate
+          pytest --verbose --cov=. --cov-report=html
+
+      - name: "⬆️ Upload coverage"
+        uses: actions/upload-artifact@v2
+        with:
+          name: "code-coverage-report"
+          path: htmlcov
+
+  build-package:
+    name: "📦 Build and publish Python package"
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
+
+    steps:
+      - name: "⬇️ Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "🔨 Setup Python"
+        uses: actions/setup-python@v2
+
+      - name: "🔨 Setup Poetry"
+        uses: abatilo/actions-poetry@v2.1.4
+
+      - name: "🔨 Setup Poetry Python environment"
+        uses: Steffo99/actions-poetry-deps@0.2.3
+
+      - name: "🏗 Build package with Poetry"
+        run: poetry build --no-interaction
+
+      - name: "⬆️ Upload code package as artifact"
+        uses: actions/upload-artifact@v2
+        with:
+          name: "package.tar.gz"
+          path: dist/*.tar.gz
+
+      - name: "⬆️ Upload wheel package as artifact"
+        uses: actions/upload-artifact@v2
+        with:
+          name: "package.whl"
+          path: dist/*.whl
+
+      - name: "Publish Poetry package"
+        run: poetry publish --no-interaction
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+
+  build-docs:
+    name: "📔 Build and publish documentation"
+    runs-on: ubuntu-latest
+    needs: build-package
+    if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
+
+    steps:
+      - name: "⬇️ Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "🔨 Setup Python"
+        uses: actions/setup-python@v2
+
+      - name: "🔨 Setup Poetry"
+        uses: abatilo/actions-poetry@v2.1.4
+
+      - name: "🔨 Setup Poetry Python environment"
+        id: pyenv
+        uses: Steffo99/actions-poetry-deps@0.2.3
+
+      - name: "🏗 Build HTML documentation with Sphinx"
+        working-directory: docs/
+        run: |
+          source ${{ steps.pyenv.outputs.pyenv }}/activate
+          make html
+
+      - name: "⬆️ Upload docs artifact"
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: "documentation"
+          path: "docs/build/html/"
+
+      - name: "🌐️ Publish build to GitHub Pages"
+        uses: peaceiris/actions-gh-pages@v3.7.3
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          publish_dir: "docs/build/html/"
+          enable_jekyll: false
