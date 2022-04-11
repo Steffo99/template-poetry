@@ -83,7 +83,7 @@ jobs:
           pytest --verbose --cov=. --cov-report=html
 
       - name: "⬆️ Upload coverage"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: "code-coverage-report"
           path: htmlcov
@@ -110,13 +110,13 @@ jobs:
         run: poetry build --no-interaction
 
       - name: "⬆️ Upload code package as artifact"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: "package.tar.gz"
           path: dist/*.tar.gz
 
       - name: "⬆️ Upload wheel package as artifact"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: "package.whl"
           path: dist/*.whl
@@ -153,7 +153,7 @@ jobs:
           make html
 
       - name: "⬆️ Upload docs artifact"
-        uses: actions/upload-artifact@v2.3.1
+        uses: actions/upload-artifact@v3
         with:
           name: "documentation"
           path: "docs/build/html/"
