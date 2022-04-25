@@ -48,6 +48,7 @@ html_context = {
 # Sphinx extensions
 extensions = [
     "sphinx.ext.intersphinx",
+    "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.todo",
 ]
@@ -140,4 +141,11 @@ smartquotes_excludes = {
         "man",
         "text",
     ]
+}
+
+# Autodoc
+autodoc_member_order = "bysource"
+autodoc_default_options = {
+    "members": True,
+    "undoc-members": True,
 }
