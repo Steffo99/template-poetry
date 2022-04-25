@@ -1,0 +1,63 @@
+name: "Check pytest suite"
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  check-pytest:
+    name: "🧪 Test package"
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
+
+    # If you need a database to perform your tests
+    # services:
+    #   postgres:
+    #     image: postgres
+    #     env:
+    #       POSTGRES_USER: username
+    #       POSTGRES_PASSWORD: password
+    #       POSTGRES_DB: db
+    #     options: >-
+    #       --health-cmd pg_isready
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
+    #     ports:
+    #       - "5432:5432"
+
+    steps:
+      - name: "⬇️ Checkout repository"
+        uses: actions/checkout@v3
+
+      - name: "🔨 Setup Python"
+        uses: actions/setup-python@v3
+
+      - name: "🔨 Setup Poetry"
+        uses: abatilo/actions-poetry@v2.1.4
+
+      - name: "🔨 Setup Poetry Python environment"
+        id: pyenv
+        uses: Steffo99/actions-poetry-deps@0.2.3
+
+      - name: "🧪 Run tests"
+        run: |
+          source ${{ steps.pyenv.outputs.pyenv }}/activate
+          pytest --verbose --cov=. --cov-report=html
+
+      - name: "⬆️ Upload coverage"
+        uses: actions/upload-artifact@v3
+        with:
+          name: "code-coverage-report"
+          path: htmlcov
