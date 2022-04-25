@@ -29,6 +29,15 @@ html_theme_options = {
     # Set this to the main color of your project
     "style_nav_header_background": "#FF7F00",
 }
+html_context = {
+    "display_github": True,
+    # Set this to the name of the organization this GitHub repository is in
+    "github_user": "Steffo99",
+    # Set this to the name of this repository
+    "github_repo": "template-poetry",
+    # Set this to the name of the main branch slash docs slash
+    "github_version": "main/docs/",
+}
 
 
 ##########################
