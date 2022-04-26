@@ -50,7 +50,7 @@ jobs:
 
       - name: "🔨 Setup Poetry Python environment"
         id: pyenv
-        uses: Steffo99/actions-poetry-deps@0.2.4
+        uses: Steffo99/actions-poetry-deps@v0.2.4
 
       - name: "🧪 Run tests"
         run: |
