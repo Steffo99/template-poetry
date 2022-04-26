@@ -1,4 +1,4 @@
-name: "Check pytest suite"
+name: "Pytest suite"
 
 on:
   push:
