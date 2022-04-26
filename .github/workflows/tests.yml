@@ -1,4 +1,4 @@
-name: "Pytest suite"
+name: "Test suite"
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
     branches:
       - main
       - master
+  workflow_call:
 
 
 defaults:
@@ -16,8 +17,8 @@ defaults:
     shell: bash
 
 jobs:
-  check-pytest:
-    name: "🧪 Test package"
+  pytest:
+    name: "🧪 Test package using pytest"
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
 
@@ -49,7 +50,7 @@ jobs:
 
       - name: "🔨 Setup Poetry Python environment"
         id: pyenv
-        uses: Steffo99/actions-poetry-deps@0.2.3
+        uses: Steffo99/actions-poetry-deps@0.2.4
 
       - name: "🧪 Run tests"
         run: |
