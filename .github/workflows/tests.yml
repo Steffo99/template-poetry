@@ -20,7 +20,6 @@ jobs:
   pytest:
     name: "🧪 Test package using pytest"
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
 
     # If you need a database to perform your tests
     # services:
