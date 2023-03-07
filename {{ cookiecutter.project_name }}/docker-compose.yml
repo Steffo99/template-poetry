@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
     {{ cookiecutter.project_identifier }}:
-        image: "ghcr.io/{{ cookiecutter.github_author }}/{{ cookiecutter.project_identifier }}:latest"
+        image: "ghcr.io/{{ cookiecutter.github_owner }}/{{ cookiecutter.project_identifier }}:latest"
         restart: unless-stopped
         env_file: 
             - "stack.env"
