@@ -1,39 +1,34 @@
-# `{{ cookiecutter.project_name | lower | kebab }}`
+# `{{ cookiecutter.project_identifier }}` [![Available on PyPI](https://img.shields.io/pypi/v/{{ cookiecutter.project_identifier }})](https://pypi.org/project/{{ cookiecutter.project_identifier }}/)
 
 {{ cookiecutter.project_description }}
+
+\[ **[Documentation]** | **[Available on PyPI]** | [Repository] \]
+
+<!-- Add an image or some examples here, if available! -->
+
+
+[Documentation]: https://{{ cookiecutter.project_name }}.readthedocs.io/latest/
+[Available on PyPI]: https://pypi.org/project/{{ cookiecutter.project_identifier }}
+[Repository]: https://github.com/{{ cookiecutter.github_owner }}/{{ cookiecutter.project_name }}/
+
 
 
 ## Installation
 
-{% if project_type == "application" %}
-
+{% if cookiecutter.project_type == "application" -%}
 <details>
-<summary>Using pip</summary>
+<summary>Recommended: Using pipx</summary>
 
-1. Create a new venv:
-
-    ```console
-    $ python -m venv .venv
-    ```
-
-2. Activate it:
-    
-    ```console
-    $ source venv/bin/activate
-    ```
-
-3. Install `{{ cookiecutter.project_name | lower | snake }}`:
+1. Install `{{ cookiecutter.project_identifier }}`:
 
     ```console
-    $ pip install {{ cookiecutter.project_name | lower | snake }}
+    $ pipx install {{ cookiecutter.project_identifier }}
     ```
 
 </details>
 
-{% elif project_type == "library" %}
-
 <details>
-<summary>Using pip</summary>
+<summary>Using venv</summary>
 
 1. Create a new venv:
 
@@ -47,33 +42,50 @@
     $ source venv/bin/activate
     ```
 
-3. Add it to your `requirements.txt` file:
+3. Install `{{ cookiecutter.project_identifier }}`:
+
+    ```console
+    $ pip install {{ cookiecutter.project_identifier }}
+    ```
+
+</details>
+{%- elif cookiecutter.project_type == "library" -%}
+<details>
+<summary>Recommended: Using poetry</summary>
+
+1. Add `{{ cookiecutter.project_identifier }}` to your dependencies:
+
+    ```console
+    $ poetry add {{ cookiecutter.project_identifier }}
+    ```
+
+</details>
+
+<details>
+<summary>Using pip</summary>
+
+1. Add `{{ cookiecutter.project_identifier }}` to your `requirements.txt` file:
 
     ```text
-    {{ project_name | lower | snake }}
+    {{ cookiecutter.project_identifier }}
     ```
 
-3. Install your dependencies:
+2. Update your dependencies:
 
     ```console
-    $ pip install -r requirements.txt
+    $ pip install --upgrade --requirement requirements.txt
     ```
 
 </details>
 
-{% endif %}
+<details>
+<summary>Using pipenv</summary>
 
+1. Install `{{ cookiecutter.project_identifier }}`:
 
+    ```console
+    $ pipenv install {{ cookiecutter.project_identifier }}
+    ```
 
-## Usage
-
-```console
-$ PACKAGE-NAME
-```
-
-
-## Development
-
-```console
-$ poetry install
-```
+</details>
+{%- endif %}

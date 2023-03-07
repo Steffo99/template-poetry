@@ -1,16 +1,31 @@
-.. Write your documentation in this file!
+###############################################################################
+{{ cookiecutter.project_identifier }}
+###############################################################################
 
-Welcome to PROJECT_NAME's documentation!
-========================================
+{{ cookiecutter.project_description }}
+
+
+=================
+Table of contents
+=================
+
+.. 
+   If you create more pages, add them in the toctree!
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents
+   
+   installation
+   {% if cookiecutter.project_tests == "pytest" -%}
+   testing
+   {%- endif %}
 
 
-Indices and tables
-==================
+============
+Useful links
+============
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+* `{{ cookiecutter.project_identifier }} on PyPI <https://pypi.org/project/{{ cookiecutter.project_identifier }}>`_
+* `{{ cookiecutter.project_name }} on GitHub <https://github.com/{{ cookiecutter.github_owner }}/{{ cookiecutter.project_name }}/>`_

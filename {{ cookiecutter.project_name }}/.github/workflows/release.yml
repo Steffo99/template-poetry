@@ -7,8 +7,10 @@ on:
       - "v*"
 
 jobs:
+  {% if cookiecutter.project_tests != "none" -%}
   test:
     uses: ./.github/workflows/test.yml
+  {%- endif %}
   
   build:
     uses: Steffo99/.github/.github/workflows/build-poetry.yml@main
@@ -16,26 +18,33 @@ jobs:
   github:
     uses: Steffo99/.github/.github/workflows/release-poetry-github.yml@main
     needs:
+      {% if cookiecutter.project_tests != "none" -%}
       - test
+      {%- endif %}
       - build
 
   pypi:
     uses: Steffo99/.github/.github/workflows/release-poetry-pypi.yml@main
     needs:
+      {% if cookiecutter.project_tests != "none" -%}
       - test
+      {%- endif %}
       - build
     secrets:
-      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+      PYPI_TOKEN: ${{ "{{" }} secrets.PYPI_TOKEN {{ "}}" }}
 
-  # TODO: Remove this if you're building a library
+  {% if cookiecutter.project_type == "library" -%}
   ghcrio:
     uses: Steffo99/.github/.github/workflows/buildrelease-docker.yml@main
     needs:
+      {% if cookiecutter.project_tests != "none" -%}
       - test
-
+      {%- endif %}
+  {%- elif cookiecutter.project_type == "application" -%}
   portainer:
     uses: Steffo99/.github/.github/workflows/deploy-portainer.yml@main
     needs:
       - ghcrio
     secrets:
-      PORTAINER_HOOK_URL: ${{ secrets.PORTAINER_HOOK_URL }}
+      PORTAINER_HOOK_URL: ${{ "{{" }} secrets.PORTAINER_HOOK_URL {{ "}}" }}
+  {%- endif %}

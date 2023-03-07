@@ -1,5 +1,3 @@
-# TODO: Read and configure this whole file!
-
 [build-system]
 #######################
 # Python build system #
@@ -21,51 +19,51 @@ build-backend = "poetry.core.masonry.api"
 
 # The name of your project.
 # Ensure that it is available on PyPI: https://pypi.org/
-name = "PACKAGE_NAME"
+name = "{{ cookiecutter.project_identifier }}"
 
 # The version of the package.
 version = "0.1.0"
 
 # A brief, one-sentence description about your project.
-description = ""
+description = "{{ cookiecutter.project_description }}"
 
 # A list of the authors of the project.
 authors = [
-    "Your Name <you@example.org>",
+    "{{ cookiecutter.project_author_full }}",
 ]
 
 # A list of maintainers of the project.
 # Often, it is the same as the authors list.
 maintainers = [
-    "Your Name <you@example.org>",
+    "{{ cookiecutter.project_author_full }}",
 ]
 
 # The license of the package.
 # Uses SPDX format: https://spdx.org/licenses/
-license = ""
+license = "{{ cookiecutter.project_license }}"
 
 # The README file.
 readme = "README.md"
 
 # The URL of the project website.
 # Not the GitHub repository!
-homepage = "https://example.org/"
+#homepage = "https://example.org/"
 
 # The URL of the project repository.
-repository = "https://github.com/"
+repository = "https://github.com/{{ cookiecutter.github_owner }}/{{ cookiecutter.project_name }}/"
 
 # The URL of the project documentation location.
-documentation = "https://example.org/docs"
+documentation = "https://{{ cookiecutter.project_name }}.readthedocs.io/latest/"
 
 # Up to five keywords related to your project.
 # See also: https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#keywords
-keywords = [
-    "",
-    "",
-    "",
-    "",
-    "",
-]
+#keywords = [
+#    "",
+#    "",
+#    "",
+#    "",
+#    "",
+#]
 
 # Any number of trove classifiers that apply to your project.
 # See the list at: https://pypi.org/classifiers/
@@ -110,10 +108,9 @@ classifiers = [
 # Poetry can create "binaries" to add to the PATH when the project is installed.
 # They are specified in the form of a mapping with the command name as key and the function to execute as value.
 
-# If you are building a library, comment this.
-# If you are building an application, replace PACKAGE-NAME and PACKAGE_NAME with your package name in kebab-case and snake_case respectively.
-PACKAGE-NAME = "PACKAGE_NAME.__main__:main"
-
+{% if cookiecutter.project_type == "application" -%}
+{{ cookiecutter.project_name }} = "{{ cookiecutter.project_identifier | snake }}.__main__:main"
+{%- endif %}
 
 
 [tool.poetry.dependencies]
@@ -143,11 +140,15 @@ python = "^3.10"
 # Same as above, but these dependencies are installed only if the project is being installed in development mode.
 # They are excluded from the final build.
 
+{%- if cookiecutter.project_docs == "sphinx" -%}
 Sphinx = "^4.3.2"
 sphinx-rtd-theme = "^1.0.0"
+{%- endif -%}
+{%- if cookiecutter.project_tests == "pytest" -%}
 pytest = "^6.2.5"
 pytest-github-actions-annotate-failures = "^0.1.6"
 pytest-cov = "^3.0.0"
+{%- endif -%}
 
 
 
