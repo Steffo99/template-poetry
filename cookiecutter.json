@@ -24,5 +24,6 @@
     "project_author_email": "somebody@example.org",
     "project_author_full": "{{ cookiecutter.project_author_name }} <{{ cookiecutter.project_author_email }}>",
     "docs_theme_color": "#123abc",
-    "github_owner": "YourGitHubUsername"
+    "github_owner": "ghost",
+    "use_portainer": false
 }

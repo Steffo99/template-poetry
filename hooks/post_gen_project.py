@@ -6,6 +6,7 @@ PATHS_TO_DELETE = {
     {% if cookiecutter.project_type != "application" -%}
     "{{ cookiecutter.project_identifier }}/__main__.py",
     "Dockerfile",
+    "docker-compose.yml",
     {%- endif %}
     {% if cookiecutter.project_docs != "sphinx" -%}
     "docs",

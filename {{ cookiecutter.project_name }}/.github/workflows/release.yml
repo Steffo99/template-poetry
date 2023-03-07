@@ -40,7 +40,7 @@ jobs:
       {% if cookiecutter.project_tests != "none" -%}
       - test
       {%- endif %}
-  {%- elif cookiecutter.project_type == "application" -%}
+  {%- elif cookiecutter.project_type == "application" and cookiecutter.use_portainer -%}
   portainer:
     uses: Steffo99/.github/.github/workflows/deploy-portainer.yml@main
     needs:
