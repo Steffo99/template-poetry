@@ -113,6 +113,7 @@ classifiers = [
 {%- endif %}
 
 
+
 [tool.poetry.dependencies]
 ##########################
 # Dependencies           #
@@ -140,15 +141,15 @@ python = "^3.10"
 # Same as above, but these dependencies are installed only if the project is being installed in development mode.
 # They are excluded from the final build.
 
-{%- if cookiecutter.project_docs == "sphinx" -%}
+{% if cookiecutter.project_docs == "sphinx" -%}
 Sphinx = "^4.3.2"
 sphinx-rtd-theme = "^1.0.0"
-{%- endif -%}
-{%- if cookiecutter.project_tests == "pytest" -%}
+{%- endif %}
+{% if cookiecutter.project_tests == "pytest" -%}
 pytest = "^6.2.5"
 pytest-github-actions-annotate-failures = "^0.1.6"
 pytest-cov = "^3.0.0"
-{%- endif -%}
+{%- endif %}
 
 
 
