@@ -1,6 +1,6 @@
 # Steffo's Python Template
 
-Easy-to-use and full-featured template for Python projects.
+Full-featured, very opinionated template for Python projects
 
 ## Features
 
@@ -46,7 +46,7 @@ To initialize a new project with this template, follow the instructions in the n
     1 - compileall
     2 - none
     3 - pytest
-    Choose from 1, 2, 3 [1]: 2
+    Choose from 1, 2, 3 [1]:
     project_license [AGPL-3.0-or-later]: 
     project_author_name [Firstname Lastname]: 
     project_author_email [somebody@example.org]: 
@@ -63,14 +63,14 @@ To initialize a new project with this template, follow the instructions in the n
 
 5. Create a new repository on GitHub for it:
 
-    - Either create a new repository via the web interface and then add it as a remote:
+    - Either [create a new repository via the web interface](https://github.com/Steffo99/template-poetry/generate), then add it as a remote on your local copy of the repository and push to it:
 
         ```console
         $ git init
-        $ git commit -m "First commit"
+        $ git commit --message "First commit"
         $ git remote add origin git@github.com:ghost/example-project.git
-        $ git branch -M main
-        $ git push -u origin main
+        $ git branch --move --force main
+        $ git push --force --set-upstream origin main
 
     - Or use [`gh`] to automatically initialize it:
 
@@ -88,7 +88,7 @@ To initialize a new project with this template, follow the instructions in the n
 
 ### Deploying
 
-8. Create a stack on Portainer, configure it to be updated via webhook, and set the webhook URL on GitHub as the `PORTAINER_HOOK_URL` repository secret.
+8. Create a stack on [Portainer], configure it to be updated via webhook, and set the webhook URL on GitHub as the `PORTAINER_HOOK_URL` repository secret.
 
 
 [`pipx`]: https://pypa.github.io/pipx/
