@@ -75,7 +75,7 @@ To initialize a new project with this template, follow the instructions in the n
     - Or use [`gh`] to automatically initialize it:
 
         ```console
-        $ gh repo create --push 
+        $ gh repo create --push example-project
         ```
 
 ### Publishing
