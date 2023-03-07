@@ -1,6 +1,6 @@
 # Steffo's Python Template
 
-Easy-to-use and full-featured template for Python projects.
+Full-featured, very opinionated template for Python projects.
 
 ## Features
 
