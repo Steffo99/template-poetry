@@ -60,23 +60,22 @@ To initialize a new project with this template, follow the instructions in the n
     ```console
     $ cd example-project
     ```
+    
+5. Initialize a Git repository in it:
 
-5. Create a new repository on GitHub for it:
+    ```console
+    $ git init
+    $ git commit --message "First commit"
+    $ git branch --move --force main
+    ```
 
-    - Either [create a new repository via the web interface](https://github.com/Steffo99/template-poetry/generate), then add it as a remote on your local copy of the repository and push to it:
-
-        ```console
-        $ git init
-        $ git commit --message "First commit"
-        $ git remote add origin git@github.com:ghost/example-project.git
-        $ git branch --move --force main
-        $ git push --force --set-upstream origin main
-
-    - Or use [`gh`] to automatically initialize it:
-
-        ```console
-        $ gh repo create --push example-project
-        ```
+6. Create a new repository on GitHub for it, either via [the web interface](https://github.com/Steffo99/template-poetry/generate) or via [`gh`], then add it as a remote on your local copy of the repository and force push to it:
+        
+    ```console
+    $ gh repo create --public --template Steffo99/template-poetry example-project
+    $ git remote add origin git@github.com:ghost/example-project.git
+    $ git push --force --set-upstream origin main
+    ```
 
 ### Publishing
 
