@@ -21,11 +21,6 @@ updates:
     allow:
       - dependency-type: direct
 
-    # Use Gitmoji in the commit message
-    commit-message:
-      prefix: "⬆️ "
-      include: "scope"
-
     # Set the pull request label
     labels:
       - "dependencies"
@@ -52,11 +47,6 @@ updates:
     allow:
       - dependency-type: direct
 
-    # Use Gitmoji in the commit message
-    commit-message:
-      prefix: "🔨️ "
-      include: "scope"
-
     # Set the pull request label
     labels:
       - "automation"
@@ -79,11 +69,6 @@ updates:
     # GitHub Actions only has direct dependencies
     allow:
       - dependency-type: direct
-
-    # Use Gitmoji in the commit message
-    commit-message:
-      prefix: "⬆️ "
-      include: "scope"
 
     # Set the pull request label
     labels:
