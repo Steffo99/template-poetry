@@ -7,7 +7,7 @@ RUN pip install "poetry"
 
 FROM system AS workdir
 # TODO: Use the name of your project
-WORKDIR /usr/src/PACKAGE_NAME
+WORKDIR /usr/src/{{ cookiecutter.project_name }}
 
 FROM workdir AS dependencies
 COPY pyproject.toml ./pyproject.toml
@@ -22,16 +22,16 @@ FROM package AS entrypoint
 ENV PYTHONUNBUFFERED=1
 ENTRYPOINT ["poetry", "run", "python", "-m"]
 # TODO: Set the name of your Python module
-CMD ["PACKAGE_NAME"]
+CMD ["{{ cookiecutter.project_identifier }}"]
 
 FROM entrypoint AS labels
 # TODO: Set a Docker image title
-LABEL org.opencontainers.image.title=""
+LABEL org.opencontainers.image.title="{{ cookiecutter.project_name }}"
 # TODO: Set a Docker image decription
-LABEL org.opencontainers.image.description=""
+LABEL org.opencontainers.image.description="{{ cookiecutter.project_description }}"
 # TODO: Set a Docker image license
-LABEL org.opencontainers.image.licenses=""
+LABEL org.opencontainers.image.licenses="{{ cookiecutter.project_license }}"
 # TODO: Set a Docker image URL
-LABEL org.opencontainers.image.url=""
+LABEL org.opencontainers.image.url="https://github.com/{{ cookiecutter.github_owner }}/{{ cookiecutter.project_name }}/"
 # TODO: Set the Docker image authors
-LABEL org.opencontainers.image.authors=""
+LABEL org.opencontainers.image.authors="{{ cookiecutter.project_author_full }}"

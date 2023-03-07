@@ -1,0 +1,29 @@
+{
+    "_extensions": [
+        "local_extensions.kebab",
+        "local_extensions.snake"
+    ],
+    "project_name": "example-project",
+    "project_identifier": "{{ cookiecutter.project_name | snake }}",
+    "project_type": [
+        "application",
+        "library"
+    ],
+    "project_description": "A demo of Steffo99/template-poetry",
+    "project_docs": [
+        "sphinx",
+        "none"
+    ],
+    "project_tests": [
+        "compileall",
+        "none",
+        "pytest"
+    ],
+    "project_license": "AGPL-3.0-or-later",
+    "project_author_name": "Firstname Lastname",
+    "project_author_email": "somebody@example.org",
+    "project_author_full": "{{ cookiecutter.project_author_name }} <{{ cookiecutter.project_author_email }}>",
+    "docs_theme_color": "#123abc",
+    "github_owner": "ghost",
+    "use_portainer": false
+}

@@ -1,0 +1,30 @@
+name: "Test suite"
+
+on:
+  # Modification of a project file in the main branch
+  push:
+    branches:
+      - main
+    paths:
+      - "{{ cookiecutter.project_identifier }}/**"
+      - "pyproject.toml"
+      - "poetry.lock"
+  # Pull request to the main branch modifying a project file
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "{{ cookiecutter.project_identifier }}/**"
+      - "pyproject.toml"
+      - "poetry.lock"
+  # Triggered by a new release
+  workflow_call:
+
+jobs:
+  {% if cookiecutter.project_tests == "compileall" -%}
+  test:
+    uses: Steffo99/.github/.github/workflows/test-poetry-compileall.yml@main
+  {%- elif cookiecutter.project_tests == "pytest" -%}
+  text:
+    uses: Steffo99/.github/.github/workflows/test-poetry-pytest.yml@main
+  {%- endif %}

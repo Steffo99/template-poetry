@@ -9,5 +9,5 @@
         "out/": true,
         "poetry.lock": true,
     },
-    "python.analysis.extraPaths": ["./PACKAGE_NAME"],
+    "python.analysis.extraPaths": ["./{{ cookiecutter.project_identifier }}"],
 }

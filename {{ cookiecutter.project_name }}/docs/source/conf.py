@@ -15,9 +15,9 @@ import datetime
 # Alter these to reflect the nature of your project!
 
 # Project name
-project = 'PROJECT NAME'
+project = '{{ cookiecutter.project_name }}'
 # Project author
-author = 'Your Name'
+author = '{{ cookiecutter.project_author_name }}'
 # Project copyright
 project_copyright = f'{datetime.date.today().year}, {author}'
 
@@ -27,14 +27,14 @@ language = "en"
 # Configuration for the theme
 html_theme_options = {
     # Set this to the main color of your project
-    "style_nav_header_background": "#FF7F00",
+    "style_nav_header_background": "{{ cookiecutter.docs_theme_color }}",
 }
 html_context = {
     "display_github": True,
     # Set this to the name of the organization this GitHub repository is in
-    "github_user": "Steffo99",
+    "github_user": "{{ cookiecutter.github_owner }}",
     # Set this to the name of this repository
-    "github_repo": "template-poetry",
+    "github_repo": "{{ cookiecutter.project_name }}",
     # Set this to the name of the main branch slash docs slash
     "github_version": "main/docs/",
 }
@@ -77,9 +77,11 @@ templates_path = [
 ]
 
 # Prologue of all rst files
-rst_prolog = ""
+rst_prolog = """
+.. |this| replace:: :mod:`{{ cookiecutter.project_identifier }}`
+"""
 # Epilogue of all rst files
-rst_epilog = ""
+rst_epilog = """"""
 
 # Default domain
 primary_domain = "py"
@@ -94,6 +96,7 @@ nitpicky = False
 # Intersphinx URLs
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3.10", None),
+    "poetry": 
 }
 # Manpages URL
 manpages_url = "https://man.archlinux.org/"
