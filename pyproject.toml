@@ -1,3 +1,5 @@
+# TODO: Read and configure this whole file!
+
 [build-system]
 #######################
 # Python build system #
@@ -110,7 +112,6 @@ classifiers = [
 
 # If you are building a library, comment this.
 # If you are building an application, replace PACKAGE-NAME and PACKAGE_NAME with your package name in kebab-case and snake_case respectively.
-
 PACKAGE-NAME = "PACKAGE_NAME.__main__:main"
 
 
