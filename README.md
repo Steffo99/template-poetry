@@ -65,8 +65,8 @@ To initialize a new project with this template, follow the instructions in the n
 
     ```console
     $ git init
+    $ git add .
     $ git commit --message "First commit"
-    $ git branch --move --force main
     ```
 
 6. Create a new repository on GitHub for it, either via [the web interface](https://github.com/Steffo99/template-poetry/generate) or via [`gh`], then add it as a remote on your local copy of the repository and force push to it:
