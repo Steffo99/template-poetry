@@ -24,7 +24,10 @@ PATHS_TO_DELETE = {
 
 for path in PATHS_TO_DELETE:
     path = pathlib.Path(path).absolute()
-    if path.is_dir():
-        shutil.rmtree(path)
-    else:
-        path.unlink()
+    try:
+        if path.is_dir():
+            shutil.rmtree(path)
+        else:
+            path.unlink()
+    except FileNotFoundError:
+        continue
