@@ -6,7 +6,7 @@
 # Used when installing the package with `pip install .`.
 # See also: https://www.python.org/dev/peps/pep-0517/
 
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.4.0"]
 build-backend = "poetry.core.masonry.api"
 
 
