@@ -24,7 +24,7 @@ ENTRYPOINT ["poetry", "run", "python", "-m"]
 # TODO: Set the name of your Python module
 CMD ["{{ cookiecutter.project_identifier }}"]
 
-FROM entrypoint AS labels
+FROM entrypoint AS final
 # TODO: Set a Docker image title
 LABEL org.opencontainers.image.title="{{ cookiecutter.project_name }}"
 # TODO: Set a Docker image decription
